@@ -54,6 +54,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("com.amazonaws:aws-java-sdk-sqs:1.11.887")
+	implementation("org.springframework:spring-jms:5.2.9.RELEASE")
+	implementation("com.amazonaws:amazon-sqs-java-messaging-lib:1.0.8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
