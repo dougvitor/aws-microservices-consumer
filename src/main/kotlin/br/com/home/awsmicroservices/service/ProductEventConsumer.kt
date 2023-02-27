@@ -24,8 +24,8 @@ class ProductEventConsumer(private val objectMapper: ObjectMapper) {
         val productEvent = objectMapper.readValue(envelope.data, ProductEvent::class.java)
 
         logger.info(
-            "Product event received - Event: {} - ProductId: {}",
-            envelope.eventType, productEvent.productId
+            "Product event received - MessageId: {} - Event: {} - ProductId: {}",
+            snsMessage.messageId, envelope.eventType, productEvent.productId
         )
     }
 }
