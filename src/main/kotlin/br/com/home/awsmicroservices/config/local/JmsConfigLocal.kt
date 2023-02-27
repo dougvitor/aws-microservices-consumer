@@ -1,10 +1,11 @@
-package br.com.home.awsmicroservices.config
+package br.com.home.awsmicroservices.config.local
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration
 import com.amazon.sqs.javamessaging.SQSConnectionFactory
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder
-import org.springframework.beans.factory.annotation.Value
+import com.amazonaws.client.builder.AwsClientBuilder
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.sqs.AmazonSQSClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -15,24 +16,24 @@ import javax.jms.Session
 
 @Configuration
 @EnableJms
-@Profile("!local")
-class JmsConfig(
-    @Value("\${aws.region}")
-    private val awsRegion: String
-) {
+@Profile("local")
+class JmsConfigLocal{
     private lateinit var sqsConnectionFactory: SQSConnectionFactory
 
     @Bean
     fun jmsListenerContainerFactory(): DefaultJmsListenerContainerFactory {
         sqsConnectionFactory = SQSConnectionFactory(
             ProviderConfiguration(),
-            AmazonSQSClientBuilder.standard()
-                .withRegion(awsRegion)
-                .withCredentials(DefaultAWSCredentialsProviderChain())
-                .build()
+            AmazonSQSClient.builder()
+                .withEndpointConfiguration(
+                    AwsClientBuilder.EndpointConfiguration(
+                        "http://localhost:4566",
+                        Regions.US_EAST_1.getName()
+                    )
+                ).withCredentials(DefaultAWSCredentialsProviderChain()).build()
         )
 
-        return  DefaultJmsListenerContainerFactory().apply {
+        return DefaultJmsListenerContainerFactory().apply {
             this.setConnectionFactory(sqsConnectionFactory)
             this.setDestinationResolver(DynamicDestinationResolver())
             this.setConcurrency("2")
