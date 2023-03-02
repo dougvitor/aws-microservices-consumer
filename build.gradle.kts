@@ -57,6 +57,8 @@ dependencies {
 	implementation("com.amazonaws:aws-java-sdk-sqs:1.12.376")
 	implementation("org.springframework:spring-jms:5.2.9.RELEASE")
 	implementation("com.amazonaws:amazon-sqs-java-messaging-lib:1.0.8")
+	implementation("com.amazonaws:aws-java-sdk-dynamodb:1.12.376")
+	implementation("io.github.boostchicken:spring-data-dynamodb:5.2.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
