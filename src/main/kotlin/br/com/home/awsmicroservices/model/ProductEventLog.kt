@@ -10,11 +10,7 @@ import org.springframework.data.annotation.Id
 class ProductEventLog {
 
     @Id
-    private val productEventKey: ProductEventKey? = null
-        get() = when (field) {
-            null -> ProductEventKey()
-            else -> field
-        }
+    private val productEventKey: ProductEventKey = ProductEventKey()
 
     @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "eventType")
@@ -33,17 +29,17 @@ class ProductEventLog {
     var ttl: Long? = null
 
     @DynamoDBAttribute(attributeName = "pk")
-    fun getPk(): String? = this.productEventKey?.getPk()
+    fun getPk(): String? = this.productEventKey.getPk()
 
     fun setPk(pk: String) {
-        this.productEventKey?.setPk(pk)
+        this.productEventKey.setPk(pk)
     }
 
     @DynamoDBAttribute(attributeName = "sk")
-    fun getSk(): String? = productEventKey?.getSk()
+    fun getSk(): String? = productEventKey.getSk()
 
     fun setSk(sk: String) {
-        this.productEventKey?.setSk(sk)
+        this.productEventKey.setSk(sk)
     }
 
 }
