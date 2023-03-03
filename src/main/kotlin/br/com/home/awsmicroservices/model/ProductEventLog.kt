@@ -18,19 +18,19 @@ class ProductEventLog {
 
     @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "eventType")
-    private var eventType: EventType? = null
+    var eventType: EventType? = null
 
     @DynamoDBAttribute(attributeName = "productId")
-    private var productId: Long? = null
+    var productId: Long? = null
 
     @DynamoDBAttribute(attributeName = "username")
-    private var username: String? = null
+    var username: String? = null
 
     @DynamoDBAttribute(attributeName = "timestamp")
-    private var timestamp: Long? = null
+    var timestamp: Long? = null
 
     @DynamoDBAttribute(attributeName = "ttl")
-    private val ttl: Long? = null
+    var ttl: Long? = null
 
     @DynamoDBAttribute(attributeName = "pk")
     fun getPk(): String? = this.productEventKey?.getPk()
