@@ -38,16 +38,18 @@ class ProductEventConsumer(
         productEventLogRepository.save(buildProductEventLog(envelope, productEvent))
     }
 
-    private fun buildProductEventLog(envelope: Envelope, productEvent: ProductEvent): ProductEventLog =
-        ProductEventLog().apply {
-            val timestamp = Instant.now().toEpochMilli()
+    private fun buildProductEventLog(envelope: Envelope, productEvent: ProductEvent): ProductEventLog {
+        val timestamp = Instant.now().toEpochMilli()
 
+        return ProductEventLog(
+            eventType = envelope.eventType,
+            productId = productEvent.productId,
+            username = productEvent.username,
+            timestamp = timestamp,
+            ttl = Instant.now().plus(Duration.ofMinutes(10)).epochSecond
+        ).apply {
             this.setPk(productEvent.code)
             this.setSk("${envelope.eventType}-$timestamp")
-            this.eventType = envelope.eventType
-            this.productId = productEvent.productId
-            this.username = productEvent.username
-            this.timestamp = timestamp
-            this.ttl = Instant.now().plus(Duration.ofMinutes(10)).epochSecond
         }
+    }
 }

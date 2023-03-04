@@ -1,45 +1,43 @@
 package br.com.home.awsmicroservices.model
 
 import br.com.home.awsmicroservices.enums.EventType
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum
+import com.amazonaws.services.dynamodbv2.datamodeling.*
 import org.springframework.data.annotation.Id
 
 @DynamoDBTable(tableName = "product-events")
-class ProductEventLog {
+data class ProductEventLog(
 
-    @Id
-    private val productEventKey: ProductEventKey = ProductEventKey()
+    @field:Id
+    @DynamoDBIgnore
+    var productEventKey: ProductEventKey = ProductEventKey(),
 
     @DynamoDBTypeConvertedEnum
-    @DynamoDBAttribute(attributeName = "eventType")
-    var eventType: EventType? = null
+    @get:DynamoDBAttribute(attributeName = "eventType")
+    var eventType: EventType,
 
-    @DynamoDBAttribute(attributeName = "productId")
-    var productId: Long? = null
+    @get:DynamoDBAttribute(attributeName = "productId")
+    var productId: Long,
 
-    @DynamoDBAttribute(attributeName = "username")
-    var username: String? = null
+    @get:DynamoDBAttribute(attributeName = "username")
+    var username: String,
 
-    @DynamoDBAttribute(attributeName = "timestamp")
-    var timestamp: Long? = null
+    @get:DynamoDBAttribute(attributeName = "timestamp")
+    var timestamp: Long,
 
-    @DynamoDBAttribute(attributeName = "ttl")
-    var ttl: Long? = null
-
-    @DynamoDBAttribute(attributeName = "pk")
-    fun getPk(): String? = this.productEventKey.getPk()
+    @get:DynamoDBAttribute(attributeName = "ttl")
+    var ttl: Long
+) {
+    @DynamoDBHashKey(attributeName = "pk")
+    fun getPk()= this.productEventKey.pk
 
     fun setPk(pk: String) {
-        this.productEventKey.setPk(pk)
+        this.productEventKey.pk = pk
     }
 
-    @DynamoDBAttribute(attributeName = "sk")
-    fun getSk(): String? = productEventKey.getSk()
+    @DynamoDBRangeKey(attributeName = "sk")
+    fun getSk() = productEventKey.sk
 
     fun setSk(sk: String) {
-        this.productEventKey.setSk(sk)
+        this.productEventKey.sk = sk
     }
-
 }
