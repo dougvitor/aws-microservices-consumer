@@ -10,6 +10,6 @@ interface ProductEventLogRepository : CrudRepository<ProductEventLog, ProductEve
 
     fun findAllByPk(code: String): List<ProductEventLog>
 
-    fun findAllByPkAndSkStartsWith(code: String, eventType: String)
+    fun findAllByPkAndSkStartsWith(code: String, eventType: String): List<ProductEventLog>
 
 }
