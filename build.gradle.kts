@@ -53,6 +53,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("com.amazonaws:aws-java-sdk-sqs:1.12.376")
 	implementation("org.springframework:spring-jms:5.2.9.RELEASE")

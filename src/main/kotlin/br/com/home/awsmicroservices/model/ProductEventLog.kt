@@ -5,28 +5,28 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*
 import org.springframework.data.annotation.Id
 
 @DynamoDBTable(tableName = "product-events")
-data class ProductEventLog(
+class ProductEventLog {
 
     @field:Id
     @DynamoDBIgnore
-    var productEventKey: ProductEventKey = ProductEventKey(),
+    var productEventKey: ProductEventKey = ProductEventKey()
 
     @DynamoDBTypeConvertedEnum
     @get:DynamoDBAttribute(attributeName = "eventType")
-    var eventType: EventType,
+    var eventType: EventType? = null
 
     @get:DynamoDBAttribute(attributeName = "productId")
-    var productId: Long,
+    var productId: Long?  = null
 
     @get:DynamoDBAttribute(attributeName = "username")
-    var username: String,
+    var username: String?  = null
 
     @get:DynamoDBAttribute(attributeName = "timestamp")
-    var timestamp: Long,
+    var timestamp: Long?  = null
 
     @get:DynamoDBAttribute(attributeName = "ttl")
-    var ttl: Long
-) {
+    var ttl: Long?  = null
+
     @DynamoDBHashKey(attributeName = "pk")
     fun getPk()= this.productEventKey.pk
 

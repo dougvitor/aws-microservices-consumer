@@ -41,15 +41,14 @@ class ProductEventConsumer(
     private fun buildProductEventLog(envelope: Envelope, productEvent: ProductEvent): ProductEventLog {
         val timestamp = Instant.now().toEpochMilli()
 
-        return ProductEventLog(
-            eventType = envelope.eventType,
-            productId = productEvent.productId,
-            username = productEvent.username,
-            timestamp = timestamp,
+        return ProductEventLog().apply {
+            eventType = envelope.eventType
+            productId = productEvent.productId
+            username = productEvent.username
+            this.timestamp = timestamp
             ttl = Instant.now().plus(Duration.ofMinutes(10)).epochSecond
-        ).apply {
-            this.setPk(productEvent.code)
-            this.setSk("${envelope.eventType}-$timestamp")
+            setPk(productEvent.code)
+            setSk("${envelope.eventType}-$timestamp")
         }
     }
 }
