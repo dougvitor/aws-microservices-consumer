@@ -27,6 +27,9 @@ class ProductEventLog {
     @get:DynamoDBAttribute(attributeName = "ttl")
     var ttl: Long?  = null
 
+    @get:DynamoDBAttribute(attributeName = "messageId")
+    var messageId: String?  = null
+
     @DynamoDBHashKey(attributeName = "pk")
     fun getPk()= this.productEventKey.pk
 

@@ -35,10 +35,10 @@ class ProductEventConsumer(
             snsMessage.messageId, envelope.eventType, productEvent.productId
         )
 
-        productEventLogRepository.save(buildProductEventLog(envelope, productEvent))
+        productEventLogRepository.save(buildProductEventLog(envelope, productEvent, snsMessage.messageId))
     }
 
-    private fun buildProductEventLog(envelope: Envelope, productEvent: ProductEvent): ProductEventLog {
+    private fun buildProductEventLog(envelope: Envelope, productEvent: ProductEvent, messageId: String): ProductEventLog {
         val timestamp = Instant.now().toEpochMilli()
 
         return ProductEventLog().apply {
@@ -47,6 +47,7 @@ class ProductEventConsumer(
             username = productEvent.username
             this.timestamp = timestamp
             ttl = Instant.now().plus(Duration.ofMinutes(10)).epochSecond
+            this.messageId = messageId
             setPk(productEvent.code)
             setSk("${envelope.eventType}-$timestamp")
         }

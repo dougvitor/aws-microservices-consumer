@@ -7,7 +7,8 @@ data class ProductEventLogDTO(
     val eventType: EventType?,
     val productId: Long?,
     val username: String?,
-    val timestamp: Long?
+    val timestamp: Long?,
+    val messageId: String?
 )
 
 fun ProductEventLog.toDto() = ProductEventLogDTO(
@@ -15,6 +16,7 @@ fun ProductEventLog.toDto() = ProductEventLogDTO(
     eventType = this.eventType,
     productId = this.productId,
     username = this.username,
-    timestamp = this.timestamp
+    timestamp = this.timestamp,
+    messageId = this.messageId
 )
 
